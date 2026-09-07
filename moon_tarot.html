@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Moon Tarot · 在线塔罗占卜</title>
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:#252344;background:#f6f3fb}
+button{font:inherit;cursor:pointer} .app{min-height:100vh;background:radial-gradient(circle at 50% 10%,#4e4a82 0,#202342 38%,#11152b 100%)}
+header{height:76px;color:#fff;display:flex;align-items:center;padding:0 5vw;border-bottom:1px solid #ffffff22;gap:45px}
+.logo{font-family:Georgia,serif;font-size:27px;white-space:nowrap}.logo small{display:block;font:12px sans-serif;opacity:.7;letter-spacing:2px}
+nav{display:flex;gap:38px;flex:1;justify-content:center}nav a{color:#e9e8fa;text-decoration:none;padding:25px 3px}nav a.active{border-bottom:2px solid #cbb8ff}
+.toggle{border:1px solid #ffffff55;background:#ffffff12;color:white;border-radius:25px;padding:8px 14px}
+.layout{max-width:1450px;margin:auto;display:grid;grid-template-columns:220px 1fr 270px;min-height:calc(100vh - 76px);background:#fbfaff}
+aside{padding:30px 18px;background:#f8f6fd}.menu button{width:100%;border:0;background:transparent;text-align:left;padding:13px 15px;border-radius:13px;color:#454366;margin:3px 0}.menu button:hover,.menu button.selected{background:#ebe5ff;color:#5544a6}
+main{padding:26px;position:relative;overflow:hidden}.hero{border-radius:20px;min-height:190px;padding:38px;text-align:center;color:white;background:linear-gradient(135deg,#272d59,#65558e);position:relative;overflow:hidden}.hero:before{content:"✦  ☾  ✧  ✦  ·  ✧  ☽  ✦";position:absolute;inset:25px;color:#ffffff55;font-size:24px;letter-spacing:28px}.hero>*{position:relative}.hero h1{font:38px Georgia,serif;margin:20px 0 8px}.hero p{margin:0;opacity:.85}
+.panel{margin-top:-30px;position:relative;background:#fffffff2;border-radius:20px;padding:28px;box-shadow:0 15px 50px #25204718}
+.spreads{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.spread{border:1px solid #ddd8eb;background:white;border-radius:14px;padding:17px;text-align:center;color:#514b70}.spread.active{border:2px solid #6c58c9;background:#faf8ff}.spread b{display:block;margin-bottom:5px}.spread span{font-size:12px;color:#89839b}
+.action{display:block;margin:22px auto 4px;max-width:310px;width:100%;border:0;border-radius:30px;padding:14px;background:linear-gradient(90deg,#6651bd,#8066d0);color:white;box-shadow:0 8px 20px #6d5bc444}
+.cards{display:flex;justify-content:center;gap:18px;margin:26px 0 5px;flex-wrap:wrap}.card{width:112px;height:176px;border-radius:12px;background:linear-gradient(145deg,#1e2b56,#514274);border:2px solid #cdbb8e;box-shadow:0 8px 20px #2223;display:flex;align-items:center;justify-content:center;color:#e8d8a8;font-size:34px;transition:.4s;transform-style:preserve-3d}.card.flipped{background:#fff;border-color:#bda66c;color:#473c70;transform:rotateY(180deg)}.card .front{display:none;text-align:center;padding:8px;transform:rotateY(180deg)}.card.flipped .back{display:none}.card.flipped .front{display:block}.front strong{display:block;font-size:17px;margin-bottom:8px}.front small{font-size:11px}
+.result{display:none;margin-top:25px;padding:22px;border-radius:16px;background:#f6f2ff;border:1px solid #e2daf8}.result.show{display:block}.result h2{margin:0 0 8px;color:#4e3d9b}.result p{line-height:1.8;margin:7px 0}
+.right{padding:28px 20px;border-left:1px solid #eeeaf5;background:#fff}.right h3{font-size:18px}.tip{display:flex;gap:12px;margin:20px 0}.num{width:30px;height:30px;border-radius:50%;background:#e8e2ff;color:#6250af;display:grid;place-items:center;flex:none}.quote{margin-top:30px;padding:20px;border-radius:15px;background:#f4efff;text-align:center;color:#63568b;line-height:1.8}
+footer{text-align:center;color:#aaa;font-size:12px;margin-top:25px}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}.layout>aside,.right{display:none}header{padding:0 20px}nav{gap:15px}.hero{min-height:170px}.panel{margin-top:-20px}.spreads{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">☾ Moon Tarot<small>聆听内心的指引</small></div>
+<nav><a href="#" class="active">首页</a><a href="#reading">塔罗占卜</a><a href="#cards">牌阵介绍</a><a href="#knowledge">塔罗知识</a></nav><button class="toggle" onclick="document.body.classList.toggle('night')">☾</button></header>
+<div class="layout">
+<aside><div class="menu">
+<button class="selected" onclick="selectSpread(1,this)">✧　单张占卜</button>
+<button onclick="selectSpread(3,this)">▣　🃏 三张牌阵</button>
+<button onclick="selectSpread(6,this)">✡　六芒星牌阵</button>
+<button onclick="selectSpread(3,this)">♡　爱情占卜</button>
+<button onclick="selectSpread(3,this)">▣　事业占卜</button>
+<button onclick="selectSpread(3,this)">▤　学业占卜</button>
+<button onclick="selectSpread(3,this)">◎　财运占卜</button>
+</div></aside>
+<main id="reading">
+<section class="hero"><h1>塔罗占卜</h1><p>闭上眼睛，深呼吸，专注于你想知道的问题<br>让塔罗牌为你揭示答案。</p></section>
+<section class="panel">
+<h3 style="text-align:center">请选择你的牌阵</h3>
+<div class="spreads">
+<div class="spread active" onclick="selectSpread(1,this)"><b>单张占卜</b><span>是 / 否 / 建议</span></div>
+<div class="spread" onclick="selectSpread(3,this)"><b>三张牌阵</b><span>过去 · 现在 · 未来</span></div>
+<div class="spread" onclick="selectSpread(6,this)"><b>六芒星牌阵</b><span>全面解析</span></div>
+</div>
+<button class="action" onclick="draw()">开始占卜　→</button>
+<div class="cards" id="cards"></div>
+<div class="result" id="result"></div>
+</section>
+<footer>塔罗仅用于娱乐与自我反思，不构成现实决策依据。</footer>
+</main>
+<aside class="right" id="knowledge"><h3>✦ 占卜小贴士</h3>
+<div class="tip"><div class="num">1</div><div><b>保持专注</b><br><small>在心中默念你想问的问题。</small></div></div>
+<div class="tip"><div class="num">2</div><div><b>放松心情</b><br><small>让自己进入平静的状态。</small></div></div>
+<div class="tip"><div class="num">3</div><div><b>点击开始</b><br><small>系统会随机抽取牌面。</small></div></div>
+<div class="tip"><div class="num">4</div><div><b>查看解析</b><br><small>根据牌面进行反思与解读。</small></div></div>
+<div class="quote">“真正的答案，往往藏在你心里，而塔罗只是帮你看见它。”</div>
+<h3 id="cards">塔罗牌的意义</h3><p style="line-height:1.8;color:#706a84">塔罗是一种象征性的自我探索工具。每张牌都可以成为观察情绪、关系与选择的一个角度。</p>
+</aside>
+</div></div>
+<script>
+const deck=[
+["愚人","新的开始、自由、冒险","适合放下过度担忧，勇敢尝试新的方向。"],
+["魔术师","行动、创造、资源","你拥有推动事情发生所需的能力，关键是主动行动。"],
+["女祭司","直觉、内省、秘密","暂时不必急着行动，倾听自己的直觉与未说出口的感受。"],
+["皇后","丰盛、滋养、成长","关注生活中的温柔与创造力，让关系或计划自然成长。"],
+["皇帝","秩序、责任、稳定","建立清晰的规则和边界，稳定会带来更好的发展。"],
+["恋人","选择、关系、价值","重要的不是别人替你选择，而是确认什么真正符合你的价值观。"],
+["战车","意志、前进、胜利","保持方向感。只要目标明确，持续行动会带来突破。"],
+["隐者","独处、思考、寻找","给自己一点安静空间，答案可能来自深入思考而非外界意见。"],
+["命运之轮","变化、周期、转机","局势正在变化。顺势调整，比执着控制每一个结果更重要。"],
+["力量","勇气、耐心、内在力量","真正的力量来自克制与耐心，而不只是强硬。"],
+["星星","希望、疗愈、愿景","保持希望。现在适合重新建立长期目标与信心。"],
+["月亮","不确定、想象、潜意识","信息可能并不完整，先区分事实与自己的担忧，再做判断。"],
+["太阳","活力、清晰、成功","积极而清晰的能量很强，坦率表达通常比猜测更有效。"],
+["世界","完成、整合、新阶段","一个阶段正在收尾，你可以总结经验后进入新的循环。"]
+];
+let count=1;
+function selectSpread(n,el){count=n;document.querySelectorAll(".spread").forEach(x=>x.classList.remove("active"));if(el?.classList.contains("spread"))el.classList.add("active");document.querySelectorAll(".menu button").forEach(x=>x.classList.remove("selected"));if(el?.tagName==="BUTTON")el.classList.add("selected");}
+function draw(){
+ const cards=document.getElementById("cards"),result=document.getElementById("result");
+ cards.innerHTML="";result.classList.remove("show");
+ let pool=[...deck].sort(()=>Math.random()-.5).slice(0,count);
+ pool.forEach((c,i)=>{
+  const d=document.createElement("div");d.className="card";
+  d.innerHTML='<div class="back">☾<br>✦</div><div class="front"><strong>'+c[0]+'</strong><small>'+c[1]+'</small></div>';
+  cards.appendChild(d);setTimeout(()=>d.classList.add("flipped"),250+i*280);
+ });
+ setTimeout(()=>{
+  let titles=count===1?["当前指引"]:count===3?["过去","现在","未来"]:["核心","阻碍","过去","现在","建议","结果"];
+  result.innerHTML="<h2>你的占卜结果</h2>"+pool.map((c,i)=>"<p><b>"+titles[i]+" · "+c[0]+"</b><br>"+c[2]+"</p>").join("");
+  result.classList.add("show");
+ },900+count*280);
+}
+</script>
+</body></html>
